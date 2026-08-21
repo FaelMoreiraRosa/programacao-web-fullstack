@@ -1,27 +1,31 @@
-function pesquisarCep(valor) {
-  const cep = valor.replace(/\D/g, "");
+        window.onload = function() {
+            document.getElementById('meuFormulario').reset();
+        };
 
-  if (cep !== "") {
-    const validacep = /^[0-9]{8}$/;
+        function pesquisarCep(valor) {
+            const cep = valor.replace(/\D/g, '');
 
-    if (validacep.test(cep)) {
-      fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (!("erro" in data)) {
-            document.getElementById("rua").value = data.logradouro;
-            document.getElementById("bairro").value = data.bairro;
-            document.getElementById("cidade").value = data.localidade;
-            document.getElementById("estado").value = data.uf;
-            // Nova linha para preencher o código IBGE
-            document.getElementById("ibge").value = data.ibge;
-          } else {
-            alert("CEP não encontrado.");
-          }
-        }).ca;
-      tch((error) => console.error("Erro ao buscar o CEP:", error));
-    } else {
-      alert("Formato de CEP inválido.");
-    }
-  }
-}
+            if (cep !== "") {
+                const validacep = /^[0-9]{8}$/;
+
+                if (validacep.test(cep)) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!("erro" in data)) {
+                                document.getElementById('rua').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                                document.getElementById('estado').value = data.uf;
+                                document.getElementById('ibge').value = data.ibge;
+                            } else {
+                                alert("CEP não encontrado.");
+                                document.getElementById('meuFormulario').reset(); // Limpa se o CEP não existir
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar o CEP:', error));
+                } else {
+                    alert("Formato de CEP inválido.");
+                }
+            }
+        }
