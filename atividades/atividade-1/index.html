@@ -8,14 +8,12 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet" />
     <title>Pesquisador de CEP</title>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./app.js"></script>
 </head>
 
 <body class="p-3 m-0 border-0 bd-example">
     <div class="card" style="width: 100%; padding: 2% 2%;">
         <h1 style="color: green;">Informe o CEP</h1>
         <hr>
-        <!-- AJUSTE: id="meuFormulario" e autocomplete="off" adicionados -->
         <form id="meuFormulario" autocomplete="off">
             <div class="row mb-3">
                 <label for="cep" class="col-sm-1 col-form-label">CEP:</label>
@@ -61,6 +59,39 @@
             </div>
         </form>
     </div>
+
+    <script>        window.onload = function () {
+            document.getElementById('meuFormulario').reset();
+        };
+
+        function pesquisarCep(valor) {
+            const cep = valor.replace(/\D/g, '');
+
+            if (cep !== "") {
+                const validacep = /^[0-9]{8}$/;
+
+                if (validacep.test(cep)) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!("erro" in data)) {
+                                document.getElementById('rua').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                                document.getElementById('estado').value = data.uf;
+                                document.getElementById('ibge').value = data.ibge;
+                            } else {
+                                alert("CEP não encontrado.");
+                                document.getElementById('meuFormulario').reset();
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar o CEP:', error));
+                } else {
+                    alert("Formato de CEP inválido.");
+                }
+            }
+        }</script>
+
 </body>
 
 </html>
