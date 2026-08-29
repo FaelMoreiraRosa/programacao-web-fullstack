@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculo de média</title>
+</head>
+<body>
+  <form id="formAluno" class="form-container">
+    <input type="text" id="nome" placeholder="Nome do aluno" required>
+    <input type="number" class="nota" placeholder="Nota 1" step="0.1" min="0" max="10" required>
+    <input type="number" class="nota" placeholder="Nota 2" step="0.1" min="0" max="10" required>
+    <input type="number" class="nota" placeholder="Nota 3" step="0.1" min="0" max="10" required>
+    <input type="number" class="nota" placeholder="Nota 4" step="0.1" min="0" max="10" required>
+    <p>Média: <span id="media">0.00</span></p>
+    <button type="submit">Registrar resultado</button>
+  </form>
+  <script src="index.js"></script>
+</body>
+</html>
